@@ -6,7 +6,7 @@ import logging
 from abc import ABC, abstractmethod
 from typing import Any
 
-from pipeline.llm_client import LLMClient
+from pipeline.llm_client import BaseLLMClient
 from pipeline.models import ITEM_DATA, METADATA, StepOutput, LLMRequest, LLMResponse
 
 logger = logging.getLogger(__name__)
@@ -21,9 +21,9 @@ class BaseStep(ABC):
     """
 
     name: str
-    llm_client: LLMClient
+    llm_client: BaseLLMClient
 
-    def __init__(self, name: str, llm_client: LLMClient) -> None:
+    def __init__(self, name: str, llm_client: BaseLLMClient) -> None:
         self.name = name
         self.llm_client = llm_client
 
@@ -69,7 +69,7 @@ class BaseStep(ABC):
         Returns:
             A list of LLM responses in the same order.
         """
-        return self.llm_client.send(requests)
+        return self.llm_client.get_llm_responses(requests)
 
     @abstractmethod
     def validate(

@@ -1,7 +1,7 @@
 """CStep pipeline package — public API."""
 
 from pipeline.catalog import CATALOG
-from pipeline.llm_client import LLMClient
+from pipeline.llm_client import BaseLLMClient, InteractiveAnthropicClient
 from pipeline.models import (
     ITEM_DATA,
     METADATA,
@@ -27,7 +27,8 @@ __all__ = [
     "StepOutput",
     "ITEM_DATA",
     "METADATA",
-    "LLMClient",
+    "BaseLLMClient",
+    "InteractiveAnthropicClient",
     "LLMRequest",
     "LLMResponse",
     "Product",

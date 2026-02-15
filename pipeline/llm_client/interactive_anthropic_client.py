@@ -1,4 +1,4 @@
-"""Token-tracking LLM client wrapper."""
+"""Token-tracking LLM client wrapper using ChatAnthropic."""
 
 from __future__ import annotations
 
@@ -7,10 +7,11 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from langchain_anthropic import ChatAnthropic
 
+from pipeline.llm_client.base_llm_client import BaseLLMClient
 from pipeline.models import LLMRequest, LLMResponse
 
 
-class LLMClient:
+class InteractiveAnthropicClient(BaseLLMClient):
     """Thin wrapper around ChatAnthropic that tracks token usage."""
 
     def __init__(
@@ -65,7 +66,7 @@ class LLMClient:
             )
         return (index, response)
 
-    def send(self, requests: list[LLMRequest]) -> list[LLMResponse]:
+    def get_llm_responses(self, requests: list[LLMRequest]) -> list[LLMResponse]:
         """Send multiple LLM requests concurrently, preserving input order.
 
         Args:
@@ -89,15 +90,22 @@ class LLMClient:
         )
         return [results[i] for i in range(len(requests))]
 
+    def get_token_usage(self) -> int:
+        """Return the total number of tokens used across all requests.
+
+        Returns:
+            Total token count (input + output).
+        """
+        return self.total_input_tokens + self.total_output_tokens
+
     def __repr__(self) -> str:
-        total_tokens = self.total_input_tokens + self.total_output_tokens
         return (
-            "LLMClient(\n"
+            "InteractiveAnthropicClient(\n"
             f"\tmodel={self.model!r},\n"
             f"\tmax_workers={self.max_workers},\n"
             f"\trequests={self.request_count},\n"
             f"\tinput_tokens={self.total_input_tokens},\n"
             f"\toutput_tokens={self.total_output_tokens},\n"
-            f"\ttotal_tokens={total_tokens}\n"
+            f"\ttotal_tokens={self.get_token_usage()}\n"
             ")"
         )
