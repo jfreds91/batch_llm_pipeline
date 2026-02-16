@@ -5,4 +5,6 @@
 - Fully type-safe - no hardcoded dicts
 - Scales to >1M sets
 
+👉 [demo.ipynb](demo.ipynb) for a worked example
+
 ![Style stage data flow](assets/diagram.png)
