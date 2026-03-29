@@ -62,6 +62,19 @@ class StyleRecommendationResponse(BaseModel):
     styles: list[Style]
 
 
+class Candidate(StepOutput):
+    """A candidate item suggested by the NN model."""
+
+    name: str
+    score: float
+
+
+class CandidateGenerationResponse(BaseModel):
+    """NN model response with one or more Candidates."""
+
+    candidates: list[Candidate]
+
+
 class LLMRequest(BaseModel, arbitrary_types_allowed=True):
     """A request to be sent to the LLM."""
 

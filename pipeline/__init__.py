@@ -6,6 +6,8 @@ from pipeline.models import (
     ITEM_DATA,
     METADATA,
     StepOutput,
+    Candidate,
+    CandidateGenerationResponse,
     LLMRequest,
     LLMResponse,
     Product,
@@ -16,6 +18,8 @@ from pipeline.models import (
 )
 from pipeline.steps import (
     BaseStep,
+    CandidateGenerationStep,
+    NeuralCandidateModel,
     RoomRecommendationStep,
     StyleRecommendationStep,
     load_products,
@@ -24,6 +28,10 @@ from pipeline.steps import (
 __all__ = [
     "BaseStep",
     "CATALOG",
+    "Candidate",
+    "CandidateGenerationResponse",
+    "CandidateGenerationStep",
+    "NeuralCandidateModel",
     "StepOutput",
     "ITEM_DATA",
     "METADATA",
